@@ -51,6 +51,10 @@ button {
         <select id="group-select">
           <option value="grunt">Grunt</option>
           <option value="dalk">Dalk</option>
+          <option value="adrian">Adrian</option>
+          <option value="winterson">Winwin</option>
+          <option value="reddit">Reddit Users</option>
+          <option value="discord">Discord Users</option>
           <option value="other">Other</option>
         </select>
       </label><br>
@@ -61,6 +65,10 @@ button {
       <select id="list-group-select">
         <option value="grunt">Grunt</option>
         <option value="dalk">Dalk</option>
+        <option value="adrian">Adrian</option>
+        <option value="winterson">Winwin</option>
+        <option value="reddit">Reddit Users</option>
+        <option value="discord">Discord Users</option>
         <option value="other">Other</option>
       </select>
     </label><br>
@@ -89,6 +97,10 @@ button {
         let data = JSON.parse(localStorage.getItem("robloxGroups")) || {
           grunt: [],
           dalk: [],
+          adrian: [],
+          winterson: [],
+          reddit: [],
+          discord: [],
           other: []
         };
         
@@ -118,7 +130,15 @@ button {
         groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955815669055598/Png.png";
       } else if (group === "dalk") {
         groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955816331755621/Png.png";
-      } else {
+      } else if (group === "adrian") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1068162938000654366/Png.png";
+      } else if (group === "winterson") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1068163020544561233/Png.png";
+      } else if (group === "reddit") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1068162565449990154/reddit-logo-16.png?width=905&height=905";
+      } else if (group === "discord") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1068162565449990154/reddit-logo-16.png?width=905&height=905";
+      } else{
         groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955815971037355/Png.png";
       }
       
