@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- written by ChatGPT! -->
+<title>PPU Alt Database</title>
+<meta name="title" content="Alt Database">
+    <meta name="description" content="By dalk">
+    <meta name="theme-color" content="#6c25be">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alts.petsim.xyz">
+    <meta property="og:title" content="Alt Database">
+    <meta property="og:description" content="By dalk">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://alts.petsim.xyz">
+    <meta property="twitter:title" content="Alt Database">
+    <meta property="twitter:description" content="By dalk">
+<link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&amp;display=swap" rel="stylesheet">
+  <style>
+    /* Default styles */
+    * {
+                font-family: 'Didact Gothic', monospace;
+                font-size: 20px;
+            }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      text-align: center;
+    }
+
+    body {
+      background-color: #333;
+      color: #fff;
+    }
+textarea {
+      background-color: #333;
+      color: #fff;
+    }
+button {
+      color: #fff;
+    }
+button {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+<body>
+    <form id="roblox-form">
+      <label>Username: <input type="text" id="username-input"></label><br>
+      <label>Group: 
+        <select id="group-select">
+          <option value="grunt">Grunt</option>
+          <option value="dalk">Dalk</option>
+          <option value="other">Other</option>
+        </select>
+      </label><br>
+      <button type="submit">Save</button>
+    </form>
+    <br>
+    <label>Select Group: 
+      <select id="list-group-select">
+        <option value="grunt">Grunt</option>
+        <option value="dalk">Dalk</option>
+        <option value="other">Other</option>
+      </select>
+    </label><br>
+    <button id="list-button">List Usernames</button>
+    <br>
+    <ul id="username-list"></ul>
+    
+    <script>
+      // Get elements
+      const form = document.getElementById("roblox-form");
+      const usernameInput = document.getElementById("username-input");
+      const groupSelect = document.getElementById("group-select");
+      const listGroupSelect = document.getElementById("list-group-select");
+      const listButton = document.getElementById("list-button");
+      const usernameList = document.getElementById("username-list");
+      
+      // Add event listener to form to handle submit event
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+        
+        // Get the values of the inputs
+        const username = usernameInput.value;
+        const group = groupSelect.value;
+        
+        // Get the data from local storage
+        let data = JSON.parse(localStorage.getItem("robloxGroups")) || {
+          grunt: [],
+          dalk: [],
+          other: []
+        };
+        
+        // Push the username to the appropriate group in the data object
+        data[group].push(username);
+        
+        // Save the data object to local storage
+        localStorage.setItem("robloxGroups", JSON.stringify(data));
+      });
+      
+      // Add event listener to the list button
+      listButton.addEventListener("click", () => {
+      // Get the selected group
+      const group = listGroupSelect.value;
+      
+      // Get the data from local storage
+      const data = JSON.parse(localStorage.getItem("robloxGroups")) || {};
+      
+      // Clear the list
+      usernameList.innerHTML = "";
+      
+      // Create an image element for the selected group
+      const groupImage = document.createElement("img");
+      
+      // Set the source of the image based on the selected group
+      if (group === "grunt") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955815669055598/Png.png";
+      } else if (group === "dalk") {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955816331755621/Png.png";
+      } else {
+        groupImage.src = "https://media.discordapp.net/attachments/1028552848843214868/1067955815971037355/Png.png";
+      }
+      
+      // Append the image to the username list
+      usernameList.appendChild(groupImage);
+      
+      // Check if the selected group has any usernames
+      if (data[group] && data[group].length > 0) {
+        // Loop through the usernames in the selected group
+        for (let i = 0; i < data[group].length; i++) {
+          // Create a list item for each username
+          const li = document.createElement("li");
+          li.innerText = data[group][i];
+          const deleteBtn = document.createElement("button");
+          deleteBtn.innerText = "Delete";
+          deleteBtn.setAttribute("data-username", data[group][i]);
+          deleteBtn.setAttribute("data-group", group);
+          deleteBtn.addEventListener("click", event => {
+            const group = event.target.getAttribute("data-group");
+            const username = event.target.getAttribute("data-username");
+            const data = JSON.parse(localStorage.getItem("robloxGroups"));
+            data[group].splice(data[group].indexOf(username), 1);
+            localStorage.setItem("robloxGroups", JSON.stringify(data));
+            listButton.click();
+          });
+          li.appendChild(deleteBtn);
+          // Append the list item to the username list
+          usernameList.appendChild(li);
+        }
+      } else {
+        // Show a message if the selected group has no usernames
+        usernameList.innerHTML = "No usernames in this group";
+      }
+    });
+
+
+  </script>
+</body>
